@@ -6,5 +6,5 @@ ENV GO111MODULE=on
 RUN go build . 
 
 FROM scratch
-COPY --from=build /go/src/github.com/cs3238-tsuzu/arrsup/arrsup /bin/
+COPY --from=build /go/bin/github.com/cs3238-tsuzu/arrsup/arrsup /bin/
 ENTRYPOINT [ "/bin/arrsup" ]
