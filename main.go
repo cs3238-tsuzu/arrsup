@@ -95,6 +95,8 @@ func main() {
 	passHostHeader := flag.Bool("pass-host-header", true, "pass host header to target")
 	help := flag.Bool("help", false, "show usage")
 
+	flag.Parse()
+
 	if *help {
 		flag.Usage()
 

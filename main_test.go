@@ -31,7 +31,7 @@ func TestRedirected(t *testing.T) {
 	}))
 	defer parent.Close()
 
-	handler := generate(parent.URL)
+	handler := generate(parent.URL, true)
 
 	proxy := httptest.NewServer(handler)
 	defer proxy.Close()
@@ -67,7 +67,7 @@ func TestPassthrough(t *testing.T) {
 	defer parent.Close()
 	t.Log("parent: ", parent.URL)
 
-	handler := generate(parent.URL)
+	handler := generate(parent.URL, true)
 
 	proxy := httptest.NewServer(handler)
 	defer proxy.Close()
