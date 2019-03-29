@@ -21,7 +21,7 @@ const redirect = `<!DOCTYPE html>
 </html>
 `
 
-func generate(proxy string) http.Handler {
+func generate(proxy string, passHostHeader bool) http.Handler {
 	redirectTemplate := template.Must(template.New("html").Parse(redirect))
 
 	mr := func(resp *http.Response) error {
@@ -70,7 +70,11 @@ func generate(proxy string) http.Handler {
 	director := func(req *http.Request) {
 		req.URL.Host = proxyURL.Host
 		req.URL.Scheme = proxyURL.Scheme
-		req.Host = proxyURL.Host
+
+		if !passHostHeader {
+			req.Host = proxyURL.Host
+		}
+
 		fmt.Println(dumpRequestWithoutBody(req))
 	}
 
@@ -88,6 +92,7 @@ func generate(proxy string) http.Handler {
 func main() {
 	proxy := flag.String("target", "", "target for this proxy")
 	listenAddr := flag.String("listen", ":80", "listen address")
+	passHostHeader := flag.Bool("pass-host-header", true, "pass host header to target")
 	help := flag.Bool("help", false, "show usage")
 
 	if *help {
@@ -96,6 +101,6 @@ func main() {
 		return
 	}
 
-	panic(http.ListenAndServe(*listenAddr, generate(*proxy)))
+	panic(http.ListenAndServe(*listenAddr, generate(*proxy, *passHostHeader)))
 
 }
