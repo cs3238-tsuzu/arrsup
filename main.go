@@ -88,7 +88,7 @@ func generate(proxy string) http.Handler {
 func main() {
 	proxy := flag.String("target", "", "target for this proxy")
 	listenAddr := flag.String("listen", ":80", "listen address")
-	help := flag.Bool("help", true, "show usage")
+	help := flag.Bool("help", false, "show usage")
 
 	if *help {
 		flag.Usage()
