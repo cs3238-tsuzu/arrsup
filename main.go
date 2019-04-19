@@ -74,8 +74,6 @@ func generate(proxy string, passHostHeader bool) http.Handler {
 		if !passHostHeader {
 			req.Host = proxyURL.Host
 		}
-
-		fmt.Println(dumpRequestWithoutBody(req))
 	}
 
 	rp := &httputil.ReverseProxy{
